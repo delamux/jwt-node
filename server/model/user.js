@@ -43,6 +43,7 @@ let userSchema = new  Schema( {
 userSchema.methods.toJSON = function () {
     let user = this;
     let userObject = user.toObject();
+    //Si no eliminamos el password del objeto se nos devolveria en las peticiones
     delete userObject.password;
 
     return userObject;

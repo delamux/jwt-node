@@ -71,7 +71,6 @@ app.put('/user/:id', function (req, res) {
 
 });
 app.delete('/user/:id', function (req, res) {
-
     let id = req.params.id;
     //User.findByIdAndRemove(id, (error, deleteUSer) => {
     User.findByIdAndUpdate(id, {status: false}, {new: true}, (error, deleteUSer) => {
@@ -86,8 +85,6 @@ app.delete('/user/:id', function (req, res) {
             ok: true,
             user: deleteUSer
         })
-
-
     })
 
 });

@@ -2,9 +2,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const User = require('../model/user');
+const { verifyToken } = require('../middlewares/authentication');
 const app = express();
 
-app.get('/users', function (req, res) {
+app.get('/users', verifyToken,function (req, res) {
     let from = Number(req.query.from) || 0;
     let limit = Number(req.query.limit) || 5;
 

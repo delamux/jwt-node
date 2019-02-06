@@ -29,7 +29,7 @@ app.get('/users', verifyToken,function (req, res) {
 
     });
 });
-app.post('/user', function (req, res) {
+app.post('/user', verifyToken,function (req, res) {
     let body = req.body;
     let user = new User({
         name: body.name,

@@ -35,7 +35,7 @@ app.post('/login', (req, res) => {
         }
         //Creamos el token aqui
         let token = jwt.sign({
-            usuario: userDb
+            user: userDb
         }, process.env.TOKEN_SEED , { expiresIn: process.env.TOKEN_EXPIRE });
 
         res.json({

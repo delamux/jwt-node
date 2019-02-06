@@ -13,10 +13,27 @@ const verifyToken = (req, res, next) => {
             })
         }
         req.user = decoded.user;
+        next();
     });
+};
+
+/**
+ * Verificar Admin
+ */
+const verifyAdmin = (req, res, next) => {
+   let role = req.user.role;
+    if (role !== 'ADMIN_ROLE') {
+        return res.json({
+            ok: false,
+            error: {
+                message: 'The user is not admin'
+            }
+        })
+    }
     next();
 };
 
 module.exports = {
-    verifyToken
+    verifyToken,
+    verifyAdmin
 };

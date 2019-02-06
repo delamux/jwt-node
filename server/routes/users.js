@@ -53,11 +53,11 @@ app.post('/user', function (req, res) {
         });
     });
 });
-app.put('/user/:id', function (req, res) {
+app.put('/user/:id', verifyToken,function (req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'status']);
 
-    user.findByIdAndUpdate(id, body, {new: true, runValidators: true}, (error, userDB) => {
+    User.findByIdAndUpdate(id, body, {new: true, runValidators: true}, (error, userDB) => {
         if (error) {
             return res.status(400).json({
                 ok: false,
@@ -71,7 +71,7 @@ app.put('/user/:id', function (req, res) {
     });
 
 });
-app.delete('/user/:id', function (req, res) {
+app.delete('/user/:id', verifyToken, function (req, res) {
     let id = req.params.id;
     //User.findByIdAndRemove(id, (error, deleteUSer) => {
     User.findByIdAndUpdate(id, {status: false}, {new: true}, (error, deleteUSer) => {

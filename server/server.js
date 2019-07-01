@@ -9,14 +9,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // create application/json parser
 app.use(bodyParser.json());
 
-//Rutas de la App
+// Rutas de la App
 app.use(require('./routes/index'));
 
-mongoose.connect('mongodb://localhost:27017/cafe', (err) => {
-    if (err) throw err;
-    console.log('Base de datos ' + 'Online'.green)
-
-});
+mongoose.connect(
+    'mongodb://localhost:27017/cafe',
+    {useNewUrlParser: true, useCreateIndex: true},
+    (err) => {
+        if (err) throw err;
+        console.log('Base de datos ' + 'Online'.green)
+    }
+);
 
 app.listen(process.env.PORT, () => {
     let port = (process.env.PORT).toString().yellow;

@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(require('./routes/index'));
 
 mongoose.connect(
-    'mongodb://localhost:27017/cafe',
+    process.env.URLDB,
     {useNewUrlParser: true, useCreateIndex: true},
     (err) => {
         if (err) throw err;

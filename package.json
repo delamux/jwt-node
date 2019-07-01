@@ -1,6 +1,9 @@
 {
   "name": "rest-server",
   "version": "1.0.0",
+  "engines": {
+    "node": "11.12.0"
+  },
   "description": "Servicios rest",
   "main": "index.js",
   "scripts": {

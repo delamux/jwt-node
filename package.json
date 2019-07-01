@@ -7,6 +7,7 @@
   "description": "Servicios rest",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

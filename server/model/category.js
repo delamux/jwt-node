@@ -7,6 +7,9 @@ let CategorySchema = new Schema({
         unique: true,
         required: [true, 'The name is required']
     },
+    description: {
+        type: String
+    },
     user_id: {
         type: Schema.Types.ObjectId, ref: 'User'
     }

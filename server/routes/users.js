@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('lodash/object');
-const User = require('../model/user');
+const User = require('../model/user').User;
 const { verifyToken, verifyAdmin } = require('../middlewares/authentication');
 const app = express();
 

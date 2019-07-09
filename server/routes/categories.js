@@ -1,7 +1,7 @@
 const express = require('express');
 const { verifyToken, verifyAdmin } = require('../middlewares/authentication');
 const app = express();
-const Category = require('../model/category');
+const Category = require('../model/category').Category;
 
 /**
  * Show all categories
@@ -30,7 +30,6 @@ app.get('/categories', verifyToken, (req, res) => {
                     total_categories: count
                 })
             });
-
         });
 });
 

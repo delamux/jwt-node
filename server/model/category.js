@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 const Schema = mongoose.Schema;
 
-let CategorySchema = new Schema({
+const CategorySchema = new Schema({
     name: {
         type: String,
         unique: true,

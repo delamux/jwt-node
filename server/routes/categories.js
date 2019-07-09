@@ -6,15 +6,53 @@ const Category = require('../model/category');
 /**
  * Show all categories
  */
-app.get('/categories', (req, res) => {
+app.get('/categories', verifyToken, (req, res) => {
+    let from = Number(req.query.from) || 0;
+    let limit = Number(req.query.limit) || 5;
 
+    Category.find()
+        .skip(from)
+        .limit(limit)
+        .populate('user_id')
+        .exec((error, categories) => {
+            if (error) {
+                return res.status(400).json({
+                    ok: false,
+                    error
+                });
+            }
+            Category.countDocuments((error, count) => {
+                res.json({
+                    ok: true,
+                    categories,
+                    total_categories: count
+                })
+            });
+
+        });
 });
 
 /**
  * Show a category
  */
-app.get('category/:id', (req, res) => {
-    Category.findByid();
+app.get('/category/:id', verifyToken, (req, res) => {
+    let id = req.params.id;
+
+    Category.findById(id, (error, categoryDB) => {
+        errorResponse(error, res, 500);
+        if (!categoryDB) {
+            return res.status(400).json({
+                ok: false,
+                error: {
+                    message: `el id: ${id} no es válido.`
+                }
+            });
+        }
+        res.json({
+            ok: true,
+            category: categoryDB
+        })
+    });
 });
 
 /**
@@ -63,11 +101,16 @@ app.put('/category/:id', verifyToken, (req, res) => {
  */
 app.delete('/category/:id', [verifyToken, verifyAdmin], (req, res) => {
     let id = req.params.id;
-    Category.findByIdAndRemove(
-        id,
-        {new: true, runValidators: true},
-        (error, categoryDeleted) => {
-            errorResponse(error, res, 400);
+    Category.findOneAndRemove(id, (error, categoryDeleted) => {
+            errorResponse(error, res, 500);
+            if (!categoryDeleted) {
+                return res.status(400).json({
+                    ok: false,
+                    error: {
+                        message: `el id: ${id} no es válido.`
+                    }
+                });
+            }
             res.json({
                 ok: true,
                 category: categoryDeleted

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 const uniqueValidator = require('mongoose-unique-validator');
 let Schema = mongoose.Schema;
 
@@ -51,4 +52,4 @@ userSchema.methods.toJSON = function () {
 
 userSchema.plugin(uniqueValidator, {message: '{PATH}'});
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('User', userSchema);

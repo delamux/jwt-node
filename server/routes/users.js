@@ -19,14 +19,13 @@ app.get('/users', verifyToken, function (req, res) {
                     error
                 });
             }
-            User.count({status: true}, (error, count) => {
+            User.countDocuments({status: true}, (error, count) => {
                 res.json({
                     ok: true,
                     users,
                     total_users: count
                 })
             });
-
     });
 });
 app.post('/user', [verifyToken, verifyAdmin], function (req, res) {

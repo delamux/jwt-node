@@ -15,7 +15,7 @@ app.get('/categories', verifyToken, (req, res) => {
         .sort(orderBy)
         .skip(from)
         .limit(limit)
-        .populate('user_id', 'name email')
+        .populate('user', 'name email')
         .exec((error, categories) => {
             if (error) {
                 return res.status(400).json({
@@ -65,7 +65,7 @@ app.post('/category', verifyToken, (req, res) => {
     let category = new Category({
         name: body.name,
         description: body.description,
-        user_id: req.user._id
+        user: req.user._id
     });
 
     category.save((error, categoryDB) => {

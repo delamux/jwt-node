@@ -9,11 +9,13 @@ const Category = require('../model/category');
 app.get('/categories', verifyToken, (req, res) => {
     let from = Number(req.query.from) || 0;
     let limit = Number(req.query.limit) || 5;
+    let orderBy = req.query.orderBy || 'name';
 
     Category.find()
+        .sort(orderBy)
         .skip(from)
         .limit(limit)
-        .populate('user_id')
+        .populate('user_id', 'name email')
         .exec((error, categories) => {
             if (error) {
                 return res.status(400).json({

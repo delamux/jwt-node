@@ -2,7 +2,6 @@ const express = require('express');
 const { verifyToken, verifyAdmin } = require('../middlewares/authentication');
 const app = express();
 const Product = require('../model/product').Product;
-
 /**
  * All products method
  */

@@ -31,14 +31,14 @@ app.get('/products', verifyToken, (req, res) => {
 /**
  * Get product by Id
  */
-app.get('/product/:id', verifyToken, (req, resp) => {
+app.get('/product/:id', verifyToken, (req, res) => {
 
 });
 
 /**
  * Update product by Id
  */
-app.put('/product/:id', verifyToken, (req, resp) => {
+app.put('/product/:id', verifyToken, (req, res) => {
 
 });
 
@@ -70,7 +70,7 @@ app.post('/product', verifyToken, (req, res) => {
 /**
  * Delete product by Id
  */
-app.delete('/product/:id', [verifyToken, verifyAdmin], (req, resp) => {
+app.delete('/product/:id', [verifyToken, verifyAdmin], (req, res) => {
 
 });
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const { verifyToken, verifyAdmin } = require('../middlewares/authentication');
 const app = express();
-const Category = require('../model/category').Category;
+const Category = require('../model/category');
 
 /**
  * Show all categories
@@ -60,8 +60,8 @@ app.get('/category/:id', verifyToken, (req, res) => {
  * Create category
  */
 app.post('/category', verifyToken, (req, res) => {
-    let body = req.body;
-    let category = new Category({
+    const body = req.body;
+    const category = new Category({
         name: body.name,
         description: body.description,
         user: req.user._id

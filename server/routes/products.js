@@ -29,17 +29,63 @@ app.get('/products', verifyToken, (req, res) => {
 });
 
 /**
+ * Search Product
+ */
+app.get('/products/search/:term', (req, res) => {
+    const term = new RegExp(req.params.term, 'i');
+
+    Product.find({name: term})
+        .populate('category', 'name')
+        .exec((error, products) => {
+            errorResponse(error, res, 500);
+            res.json({
+                ok: true,
+                products
+            })
+
+        })
+});
+/**
  * Get product by Id
  */
 app.get('/product/:id', verifyToken, (req, res) => {
+    const id = req.params.id;
+    Product.findById(id)
+        .populate('category', 'name')
+        .populate('user', 'name email')
+        .exec((error, product) => {
+        errorResponse(error, res, 500);
+        if (!product) {
+            return res.status(400).json({
+                ok: false,
+                error: {
+                    message: `The id: ${id} is not valid`
+                }
+            });
+        }
 
+        return res.json({
+            ok: true,
+            product
+        })
+    })
 });
 
 /**
  * Update product by Id
  */
 app.put('/product/:id', verifyToken, (req, res) => {
-
+    const id = req.params.id;
+    Product.findByIdAndUpdate(id,
+        req.body,
+        {new: true, runValidators: true},
+        (error, productUpdated) => {
+            errorResponse(error, res, 400);
+            res.json({
+                ok: true,
+                product: productUpdated
+            })
+        })
 });
 
 /**
@@ -71,7 +117,22 @@ app.post('/product', verifyToken, (req, res) => {
  * Delete product by Id
  */
 app.delete('/product/:id', [verifyToken, verifyAdmin], (req, res) => {
-
+    const id = req.params.id;
+    Product.findOneAndRemove(id, (error, product) => {
+        errorResponse(error, res, 500);
+        if (!product) {
+            return res.status(400).json({
+                ok: false,
+                error: {
+                    message: `The id: ${id} is invalid`
+                }
+            });
+        }
+        res.json({
+            ok: true,
+            product
+        })
+    });
 });
 
 

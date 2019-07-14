@@ -16,6 +16,17 @@ app.put('/upload', function(req, res) {
 
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     let sampleFile = req.files.upload_file;
+    let fileSplit = sampleFile.name.split('.');
+    let fileExtension = fileSplit[fileSplit.length -1];
+    let allowedExtensions =['jpg', 'jpeg', 'png'];
+    if (allowedExtensions.indexOf(fileExtension) < 0) {
+        return res.status(400).json({
+            ok: false,
+            err: {
+                message: 'File extension not allowed'
+            }
+        });
+    }
 
     // Use the mv() method to place the file somewhere on your server
     sampleFile.mv('./uploads/filename.jpg', (err) => {
